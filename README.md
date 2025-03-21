@@ -3,7 +3,6 @@
 This SwiftUI-based iOS application is part of an academic exercise focused on designing and evaluating **accessible mobile interfaces**. It serves as both a tutorial and hands-on lab for implementing accessibility best practices in SwiftUI.
 
 > Created by: ✍️ University Course  
-> Maintainer: Azizbek Asadov, 21.03.2025
 
 ---
 
