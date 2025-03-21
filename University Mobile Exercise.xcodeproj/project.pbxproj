@@ -94,7 +94,6 @@
 		5D2ADFE12D8D9817007ACFD3 /* presentation  */ = {
 			isa = PBXGroup;
 			children = (
-				5D2ADFF82D8D98E8007ACFD3 /* extensions */,
 				5D2ADFF52D8D9888007ACFD3 /* Main */,
 				CE9CD4D327984CA2006F1D33 /* Meals */,
 				CE9CD4D427984CAC006F1D33 /* Enrollment */,
@@ -106,7 +105,7 @@
 		5D2ADFE22D8D981D007ACFD3 /* domain */ = {
 			isa = PBXGroup;
 			children = (
-				CE9CD4D527984CD1006F1D33 /* Models */,
+				5D2ADFF82D8D98E8007ACFD3 /* extensions */,
 			);
 			path = domain;
 			sourceTree = "<group>";
@@ -114,6 +113,7 @@
 		5D2ADFE32D8D9826007ACFD3 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				CE9CD4D527984CD1006F1D33 /* Models */,
 			);
 			path = data;
 			sourceTree = "<group>";
