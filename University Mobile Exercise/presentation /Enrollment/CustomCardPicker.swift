@@ -3,11 +3,11 @@ import SwiftUI
 struct CustomCardPicker: View {
     let title: String
     let items: [String]
+    
     @Binding var selected: String
+    
     var showSearchbar = true
 
-    
-    
     var body: some View {
 //        NavigationLink(destination: CustomPicker(title: title, items: items, selected: $selected, showSearchbar: showSearchbar)){
 //            HStack(){

@@ -25,4 +25,7 @@ final class MealsViewUITests: XCTestCase {
             mealsTab.tap()
         }
 
+    func test_isMealCardViewAccessible() {
+        navigateToMealsTab()
+    }
 }
