@@ -10,6 +10,8 @@
 		5D2ADFFA2D8D98F0007ACFD3 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFF92D8D98F0007ACFD3 /* View+.swift */; };
 		5D2ADFFC2D8D999D007ACFD3 /* Collection+_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */; };
 		5D2ADFFE2D8D9D02007ACFD3 /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */; };
+		A6BC02CC2D92F1E70079319A /* gitflow.md in Resources */ = {isa = PBXBuildFile; fileRef = A6BC02CA2D92F1E70079319A /* gitflow.md */; };
+		A6BC02CD2D92F1E70079319A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A6BC02CB2D92F1E70079319A /* README.md */; };
 		CE9CD4C627984AC9006F1D33 /* University_Mobile_ExerciseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */; };
 		CE9CD4C827984AC9006F1D33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9CD4C727984AC9006F1D33 /* ContentView.swift */; };
 		CE9CD4CA27984ACC006F1D33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9CD4C927984ACC006F1D33 /* Assets.xcassets */; };
@@ -46,6 +48,8 @@
 		5D2ADFF92D8D98F0007ACFD3 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+_.swift"; sourceTree = "<group>"; };
 		5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
+		A6BC02CA2D92F1E70079319A /* gitflow.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = gitflow.md; sourceTree = "<group>"; };
+		A6BC02CB2D92F1E70079319A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE988B7D279996B200F269DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE9CD4C227984AC9006F1D33 /* University Mobile Exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "University Mobile Exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = University_Mobile_ExerciseApp.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 				CE9CD4C427984AC9006F1D33 /* University Mobile Exercise */,
 				5D2ADFEB2D8D984B007ACFD3 /* University Mobile ExerciseTests */,
 				CE9CD4C327984AC9006F1D33 /* Products */,
+				A6BC02CA2D92F1E70079319A /* gitflow.md */,
+				A6BC02CB2D92F1E70079319A /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,6 +344,8 @@
 			files = (
 				CE9CD4CD27984ACC006F1D33 /* Preview Assets.xcassets in Resources */,
 				CE9CD4CA27984ACC006F1D33 /* Assets.xcassets in Resources */,
+				A6BC02CC2D92F1E70079319A /* gitflow.md in Resources */,
+				A6BC02CD2D92F1E70079319A /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

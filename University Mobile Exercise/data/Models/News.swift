@@ -59,7 +59,12 @@ class Publication: News{}
 extension News {
     static let sampleData: [News] =
     [News(title: "Here is Geneva", text: "Geneva is the second largest city in Switzerland after Zurich and the most international city in Europe, with over 40% of the population coming from abroad. The main economic sectors are banking, intergovernmental and non-governmental administration, technology and tourism. Geneva boasts of being one of the most beautiful and cultured cities in the world, combining the splendor of nature with a rich array of historical and architectural offerings. In addition, the city is an important gateway to the Alps for outdoor enthusiasts all year round.", preview_text: "A short summary on Geneva" ,date: Date(timeIntervalSince1970: 1640786789)),
-     ImageNews(title: "Here is Zurich ", text: "Zurich is the largest city in Switzerland and the capital of the Canton of Zurich. It is located in northern central Switzerland, at the northwestern tip of Lake Zurich. ", preview_text: "A short summary on Zurich", date: Date(timeIntervalSince1970: 1640283000), imageName: "image123456", imageDescription: "Zurich at Night"),
+     ImageNews(title: "Here is Zurich ",
+               text: "Zurich is the largest city in Switzerland and the capital of the Canton of Zurich. It is located in northern central Switzerland, at the northwestern tip of Lake Zurich. ",
+               preview_text: "A short summary on Zurich",
+               date: Date(timeIntervalSince1970: 1640283000),
+               imageName: "image123456",
+               imageDescription: "Zurich at Night"),
     
     ]
 

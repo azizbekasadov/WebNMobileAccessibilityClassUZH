@@ -14,7 +14,7 @@ struct ImageNewsView: View {
             Image(news.imageName)
                 .resizable()
                 .scaledToFit()
-            //TODO
+                .accessibilityLabel(news.imageDescription)
 
             Text(news.text)
             Spacer()
