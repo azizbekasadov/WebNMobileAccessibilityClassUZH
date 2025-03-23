@@ -1,7 +1,11 @@
+//
+//  MealsView.swift
+//  University Mobile ExerciseTests
+//
+//  Created by Azizbek Asadov on 21.03.2025.
+//
+
 import SwiftUI
-
-
-//MealsView represents a view, which shows all restaurants in a list.
 
 struct MealsView: View {
     //Load sample restaurant models from the Restaurant class

@@ -1,31 +1,56 @@
+//
+//  NewsCardView.swift
+//  University Mobile Exercise
+//
+//  Created by Azizbek Asadov on 23.03.2025.
+//
+
 import SwiftUI
-import Foundation
 
-
-func dateFormatter(date: Date) -> String {
-    let dateFormatter = DateFormatter()
-    // Set Date Format
-    dateFormatter.dateFormat = "dd.MM.yyyy"
-    // Convert Date to String
-    return dateFormatter.string(from: date)
-}
-
-struct NewsCardView: View{
+struct NewsCardView: View {
     let news: News
     
-    var body: some View {
-        
-        VStack(alignment: .leading){
-            Text("\(dateFormatter(date:news.date))")
-                .font(.caption2)
-            Text(news.title)
-                .font(.headline)
-        
-            Spacer()
-            HStack {
-                Text(news.preview_text)
+    @ViewBuilder
+    private func MainView() -> some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                Text("\(news.date.format())")
+                    .font(.caption2)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.5)
+                    .accessibilityLabel("Published on \(news.date.format())")
+
+                Text(news.title)
+                    .font(.headline)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.5)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityLabel("Headline: \(news.title)")
+
+                Spacer()
+
+                HStack {
+                    Text(news.preview_text)
+                        .font(.body)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.5)
+                        .fixedSize(horizontal: false, vertical: false)
+                        .accessibilityLabel("Summary: \(news.preview_text)")
+                }
             }
-        }.padding()
+            .padding()
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("News: \(news.title). Published on \(news.date.format()). Summary: \(news.preview_text)")
+        }
+    }
+
+    var body: some View {
+        if #available(iOS 15.0, *) {
+            MainView()
+                .dynamicTypeSize(.large ... .accessibility5)
+        } else {
+            MainView()
+        }
     }
 }
 

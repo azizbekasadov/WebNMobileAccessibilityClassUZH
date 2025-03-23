@@ -56,12 +56,26 @@ struct MainView: View {
     @State private var tabViewsFactory: TabViewFactoryProtocol = TabViewFactory(tabs: Tabs.mainTabs)
     
     var body: some View {
-        TabView(){
+        if #available(iOS 15, *) {
+            MainView()
+                .dynamicTypeSize(.large ... .accessibility5)
+        } else {
+            MainView()
+        }
+    }
+    
+    @ViewBuilder
+    private func MainView() -> some View {
+        TabView {
             ForEach(Tabs.mainTabs, id:\.rawValue) { tab in
                 tabViewsFactory.make(for: tab)
                     .accessibilityIdentifier("tab_\(tab.tabItem.imageName)")
+                    .accessibilityLabel(tab.tabItem.title ?? "tab_NNN")
+                    .accessibilityHint("Switches to the \(String(describing: tab.tabItem.title)) tab")
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Main tab navigation")
     }
 }
 
