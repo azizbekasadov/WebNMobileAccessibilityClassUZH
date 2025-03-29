@@ -37,21 +37,17 @@ struct RegistrationView: View {
                 showClearLastname = editing })
                 .accessibilityLabel("Last name")
                 .modifier(TFClearButton(input: $registration.personalData.last_name, showButton: $showClearLastname))
-            HStack{
-                Text("Date of birth")
-                    .accessibilityLabel("Date of birth, \(registration.personalData.date_of_birth.format())")
-                Spacer()
-                Button(
-                    (registration.personalData.date_of_birth.format())
-                ){
-                    showDatePicker = !showDatePicker
-                }.accessibilityHint((showDatePicker) ? "Expanded":"Collapsed")
+             HStack {
+                DatePicker(
+                    "Date of birth",
+                    selection: $registration.personalData.date_of_birth,
+                    displayedComponents: .date
+                )
+                .accessibilityLabel("Date of birth")
+                .accessibilityValue(registration.personalData.date_of_birth.format())
+                .accessibilityHint("Double tap to change date")
             }
-            
-            if(showDatePicker){
-                DatePicker("", selection: $registration.personalData.date_of_birth, displayedComponents: .date)
-                    .datePickerStyle(.graphical)
-            }
+            .accessibilityElement(children: .combine)
             
             CustomCardPicker(
                 title: "Gender",
