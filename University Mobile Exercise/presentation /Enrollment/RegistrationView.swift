@@ -1,3 +1,10 @@
+//
+//  RegistrationView.swift
+//  University Mobile ExerciseTests
+//
+//  Created by Azizbek Asadov on 21.03.2025.
+//
+
 import SwiftUI
 
 //RegistrationView represents the enrollment form view.
@@ -17,53 +24,104 @@ struct RegistrationView: View {
     var body: some View {
         VStack{
             Form{
-                PersonalDataSection()
-                AddressSection()
-                ProgramSection()
+                if #available(iOS 15.0, *) {
+                    PersonalDataSection()
+                        .accessibilityHeading(.h1)
+                } else {
+                    PersonalDataSection()
+                }
+                
+                if #available(iOS 15.0, *) {
+                    AddressSection()
+                        .accessibilityHeading(.h2)
+                } else {
+                    AddressSection()
+                }
+                
+                if #available(iOS 15.0, *) {
+                    ProgramSection()
+                        .accessibilityHeading(.h2)
+                } else {
+                    ProgramSection()
+                }
             }
         }
     }
     
     @ViewBuilder
     private func PersonalDataSection() -> some View {
-        Section(header: Text("Personal Data")){
-           TextField("First Name", text: $registration.personalData.first_name, onEditingChanged: { (editing) in
-                showClearFirstname = editing
-            })
-                .accessibilityLabel("First name")
-                .modifier(TFClearButton(input: $registration.personalData.first_name, showButton: $showClearFirstname))
-            TextField("Last Name", text: $registration.personalData.last_name,
-                      onEditingChanged: { (editing) in
-                showClearLastname = editing })
-                .accessibilityLabel("Last name")
-                .modifier(TFClearButton(input: $registration.personalData.last_name, showButton: $showClearLastname))
-            HStack{
-                Text("Date of birth")
-                    .accessibilityLabel("Date of birth, \(registration.personalData.date_of_birth.format())")
-                Spacer()
-                Button(
-                    (registration.personalData.date_of_birth.format())
-                ){
-                    showDatePicker = !showDatePicker
-                }.accessibilityHint((showDatePicker) ? "Expanded":"Collapsed")
+        Section(header: Text("Personal Data"))
+        {
+            TextField(
+                "First Name",
+                text: $registration.personalData.first_name,
+                onEditingChanged: { (editing) in
+                    showClearFirstname = editing
+                }
+            )
+            .accessibilityLabel("First name")
+            .modifier(
+                TFClearButton(
+                    input: $registration.personalData.first_name,
+                    showButton: $showClearFirstname
+                )
+            )
+            TextField(
+                "Last Name",
+                text: $registration.personalData.last_name,
+                onEditingChanged: { (editing) in
+                    showClearLastname = editing
+                }
+            )
+            .accessibilityLabel("Last name")
+            .modifier(
+                TFClearButton(
+                    input: $registration.personalData.last_name,
+                    showButton: $showClearLastname
+                )
+            )
+            
+            HStack {
+                Button(action: {
+                    showDatePicker.toggle()
+                }) {
+                    HStack {
+                        Text("Date of birth")
+                        Spacer()
+                        Text(registration.personalData.date_of_birth.format())
+                            .foregroundColor(.blue)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    "Date of birth, currently selected: \(registration.personalData.date_of_birth.format())"
+                )
+                .accessibilityHint(
+                    showDatePicker ? "Tap to collapse date picker" : "Tap to expand date picker"
+                )
             }
             
-            if(showDatePicker){
-                DatePicker("", selection: $registration.personalData.date_of_birth, displayedComponents: .date)
-                    .datePickerStyle(.graphical)
+            if showDatePicker {
+                DatePicker(
+                    "Select your date of birth",
+                    selection: $registration.personalData.date_of_birth,
+                    displayedComponents: .date
+                )
+                .datePickerStyle(.graphical)
+                .accessibilityLabel("Date picker for date of birth")
             }
             
             CustomCardPicker(
+                selected: $registration.personalData.gender,
                 title: "Gender",
                 items: Registration.genders,
-                selected: $registration.personalData.gender,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.personalData.nationality,
                 title: "Nationality",
-                items: Registration.countries,
-                selected: $registration.personalData.nationality
+                items: Registration.countries
             )
         }
     }
@@ -71,20 +129,33 @@ struct RegistrationView: View {
     @ViewBuilder
     private func AddressSection() -> some View {
         Section(header: Text("Address")){
-            TextField("Street and Number", text: $registration.address.street_and_number,
+            TextField(
+                "Street and Number",
+                text: $registration.address.street_and_number,
                       onEditingChanged: { (editing) in
                 showClearAddress = editing
             })
                 .accessibilityLabel("Street and Number")
-                .modifier(TFClearButton(input: $registration.address.street_and_number, showButton: $showClearAddress))
+                .modifier(
+                    TFClearButton(
+                        input: $registration.address.street_and_number,
+                        showButton: $showClearAddress
+                    )
+                )
             
-            TextField("City", text: $registration.address.city,
+            TextField(
+                "City",
+                text: $registration.address.city,
                       onEditingChanged: { (editing) in
                 showClearCity = editing
             })
                 .accessibilityLabel("City")
-                .modifier(TFClearButton(input: $registration.address.city,
-                    showButton: $showClearCity))
+                .modifier(
+                    TFClearButton(
+                        input: $registration.address.city,
+                        showButton: $showClearCity
+                    )
+                )
             TextField(
                 "Zipcode",
                 text :$registration.address.zipCode,
@@ -95,8 +166,18 @@ struct RegistrationView: View {
             )
                 .keyboardType(.decimalPad)
             .accessibilityLabel("Zipcode")
-                .modifier(TFClearButton(input: $registration.address.zipCode, showButton: $showClearZIP))
-            CustomCardPicker(title: "Country", items: Registration.countries, selected: $registration.address.country)
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.zipCode,
+                    showButton: $showClearZIP
+                )
+            )
+            
+            CustomCardPicker(
+                selected: $registration.address.country,
+                title: "Country",
+                items: Registration.countries
+            )
         }
     }
     
@@ -104,23 +185,23 @@ struct RegistrationView: View {
     private func ProgramSection() -> some View {
         Section(header: Text("Program")){
             CustomCardPicker(
+                selected: $registration.enrollment.semester,
                 title: "Semester",
                 items: Registration.semester,
-                selected: $registration.enrollment.semester,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.enrollment.department,
                 title: "Deparment",
                 items: Registration.departments,
-                selected: $registration.enrollment.department,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.enrollment.degree,
                 title: "Degree",
                 items: Registration.degrees,
-                selected: $registration.enrollment.degree,
                 showSearchbar: false
             )
         }
