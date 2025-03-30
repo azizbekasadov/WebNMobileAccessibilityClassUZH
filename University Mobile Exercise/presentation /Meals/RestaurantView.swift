@@ -1,29 +1,27 @@
+//
+//  RestaurantView.swift
+//  University Mobile ExerciseTests
+//
+//  Created by Azizbek Asadov on 21.03.2025.
+//
 
 import SwiftUI
-
-
-//Restaurant View
 
 struct RestaurantView: View {
     var restaurant: Restaurant
     
+    @Environment(\.openURL) private var openURL
+    
     @State private var selectedTab: Int = 0
     @State private var rating: Double = 0.0
     
-    
     func dateFormatter(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        // Set Date Format
-        dateFormatter.dateFormat = "HH:mm"
-        // Convert Date to String
-        // return dateFormatter.string(from: date)
-        return DateFormatter.localizedString(from: date, dateStyle:.none, timeStyle: .short)
+        DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
     }
     
     var body: some View {
-        VStack (alignment: .leading){
-            //picker as top navigationtabbar
-            Picker("", selection: $selectedTab){
+        VStack(alignment: .leading) {
+            Picker("", selection: $selectedTab) {
                 Text("Restaurant")
                     .tag(0)
                 Text("Info")
@@ -31,124 +29,129 @@ struct RestaurantView: View {
             }
             .pickerStyle(.segmented)
             .padding()
-            
-            //Depending on the selected tab, the displayed view is changed
-            switch(selectedTab){
+            .accessibilityLabel("Tab Selection")
+            .accessibilityHint("Switch between restaurant menu and information")
+
+            switch(selectedTab) {
             case 0:
-                VStack(alignment: .leading){
-                    HStack(){
+                VStack(alignment: .leading) {
+                    HStack {
                         Spacer()
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 25)
                                 .fill(.white)
-                                .shadow(radius:10)
-                            
-                            VStack{
+                                .shadow(radius: 10)
+
+                            VStack(alignment: .leading) {
                                 Text("Home menu")
                                     .fontWeight(.bold)
-                                    .frame(maxWidth:150, alignment: .leading)
+                                    .accessibilityAddTraits(.isHeader)
+
                                 Text(restaurant.homeMenu.name)
-                                    .frame(maxWidth:150, alignment: .leading)
-                                
+
                                 Text("Ingredients")
-                                    .frame(maxWidth:150, alignment: .leading)
                                     .padding(.top)
+                                    .accessibilityAddTraits(.isHeader)
+
                                 ForEach(restaurant.homeMenu.ingredients, id: \.self) { tag in
-                                    Text("-\(tag)")
-                                        .padding(3)
-                                        .cornerRadius(5)
-                                        .frame(maxWidth: 150, alignment: .leading)
+                                    Text("- \(tag)")
+                                        .accessibilityLabel(tag)
                                 }
                             }
                             .padding()
-                            
-                        }.fixedSize()
-                        
+                        }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("Home menu: \(restaurant.homeMenu.name). Ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
+
                         Spacer()
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 25)
                                 .fill(.white)
-                                .shadow(radius:10)
-                            
-                            //TODO
-                            VStack{
+                                .shadow(radius: 10)
+
+                            VStack(alignment: .leading) {
                                 Text("Vegi menu")
                                     .fontWeight(.bold)
-                                    .frame(maxWidth:150, alignment: .leading)
-                                
+                                    .accessibilityAddTraits(.isHeader)
+
                                 Text(restaurant.vegiMenu.name)
-                                    .frame(maxWidth:150, alignment: .leading)
-                                
-                                
+
                                 Text("Ingredients")
-                                    .frame(maxWidth:150, alignment: .leading)
                                     .padding(.top)
-                                
+                                    .accessibilityAddTraits(.isHeader)
+
                                 ForEach(restaurant.vegiMenu.ingredients, id: \.self) { tag in
-                                    Text("-\(tag)")
-                                        .padding(3)
-                                        .cornerRadius(10)
-                                        .frame(maxWidth: 150, alignment: .leading)
+                                    Text("- \(tag)")
+                                        .accessibilityLabel(tag)
                                 }
                             }
                             .padding()
-                        
-                            
                         }
-                        .fixedSize()
-                        
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("Vegetarian menu: \(restaurant.vegiMenu.name). Ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
+
                         Spacer()
                     }
-                    
                 }
                 .padding()
+
             default:
-                VStack(alignment: .leading){
-                    Section(header: Text("Opening Hours")){
+                VStack(alignment: .leading) {
+                    Section(header: Text("Opening Hours")
+                        .accessibilityAddTraits(.isHeader)) {
                         Text("\(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                             .padding(.bottom)
+                            .accessibilityLabel("Opening hours from \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                     }
-                    
-                    Section(header: Text("Location")){
+
+                    Section(header: Text("Location")
+                        .accessibilityAddTraits(.isHeader)) {
                         Text(restaurant.address)
                             .foregroundColor(Color("LightGray"))
                             .padding(.bottom)
+                            .accessibilityLabel("Address: \(restaurant.address)")
                     }
-                    
-                    Section(header: Text("Contact")){
-                        
-                        //TODO
+
+                    Section(header: Text("Contact")
+                        .accessibilityAddTraits(.isHeader)) {
                         Text("Website")
                             .onTapGesture {
-                                UIApplication.shared.openURL(URL(string:"https://google.ch")!)
+                                openURL(URL(string:"https://google.ch")!)
                             }
-                            .accessibilityAddTraits([.isButton])
                             .padding(.bottom)
-
-                        
+                            .accessibilityLabel("Visit website")
+                            .accessibilityHint("Opens the restaurant website in browser")
+                            .accessibilityAddTraits(.isLink)
                     }
-                    
-                    //TODO
-                    Section(header: Text("Rate our restaurant")){
+
+                    Section(header: Text("Rate our restaurant")
+                        .accessibilityAddTraits(.isHeader)) {
+                            
                         Slider(
                             value: $rating,
                             in: 0...5,
                             step: 1
                         )
+                        .accessibilityLabel("Rating slider")
+                        .accessibilityValue("\(Int(rating)) out of 5")
+                        .accessibilityHint("Adjust to rate the restaurant")
+
                         Text("Rating: \(Int(rating))")
                             .padding(.bottom)
+                            .accessibilityHidden(true)
                     }
                 }
                 .padding()
             }
+
             Spacer()
         }
         .navigationBarTitle(restaurant.name, displayMode: .inline)
-        
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Restaurant: \(restaurant.name)")
     }
 }
-
-
 
 struct MensaView_Preview: PreviewProvider{
     static var previews: some View {
