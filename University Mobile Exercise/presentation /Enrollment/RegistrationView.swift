@@ -27,27 +27,38 @@ struct RegistrationView: View {
     @ViewBuilder
     private func PersonalDataSection() -> some View {
         Section(header: Text("Personal Data")){
-           TextField("First Name", text: $registration.personalData.first_name, onEditingChanged: { (editing) in
-                showClearFirstname = editing
-            })
-                .accessibilityLabel("First name")
-                .modifier(TFClearButton(input: $registration.personalData.first_name, showButton: $showClearFirstname))
-            TextField("Last Name", text: $registration.personalData.last_name,
-                      onEditingChanged: { (editing) in
-                showClearLastname = editing })
-                .accessibilityLabel("Last name")
-                .modifier(TFClearButton(input: $registration.personalData.last_name, showButton: $showClearLastname))
-             HStack {
-                DatePicker(
-                    "Date of birth",
-                    selection: $registration.personalData.date_of_birth,
-                    displayedComponents: .date
+            TextField(
+                "First Name",
+                text: $registration.personalData.first_name,
+                onEditingChanged: { (editing) in
+                    showClearFirstname = editing
+                }
+            )
+            .accessibilityLabel("First name")
+            .modifier(
+                TFClearButton(
+                    input: $registration.personalData.first_name,
+                    showButton: $showClearFirstname
                 )
-                .accessibilityLabel("Date of birth")
-                .accessibilityValue(registration.personalData.date_of_birth.format())
-                .accessibilityHint("Double tap to change date")
-            }
-            .accessibilityElement(children: .combine)
+            )
+            TextField(
+                "Last Name",
+                text: $registration.personalData.last_name,
+                onEditingChanged: { (editing) in
+                    showClearLastname = editing
+                }
+            )
+            .accessibilityLabel("Last name")
+            .modifier(
+                TFClearButton(
+                    input: $registration.personalData.last_name,
+                    showButton: $showClearLastname
+                )
+            )
+            
+            UMDatePicker(
+                dateValue: $registration.personalData.date_of_birth
+            )
             
             CustomCardPicker(
                 title: "Gender",
@@ -67,20 +78,31 @@ struct RegistrationView: View {
     @ViewBuilder
     private func AddressSection() -> some View {
         Section(header: Text("Address")){
-            TextField("Street and Number", text: $registration.address.street_and_number,
+            TextField(
+                "Street and Number",
+                text: $registration.address.street_and_number,
                       onEditingChanged: { (editing) in
                 showClearAddress = editing
             })
-                .accessibilityLabel("Street and Number")
-                .modifier(TFClearButton(input: $registration.address.street_and_number, showButton: $showClearAddress))
+            .accessibilityLabel("Street and Number")
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.street_and_number,
+                    showButton: $showClearAddress
+                )
+            )
             
             TextField("City", text: $registration.address.city,
                       onEditingChanged: { (editing) in
                 showClearCity = editing
             })
-                .accessibilityLabel("City")
-                .modifier(TFClearButton(input: $registration.address.city,
-                    showButton: $showClearCity))
+            .accessibilityLabel("City")
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.city,
+                    showButton: $showClearCity
+                )
+            )
             TextField(
                 "Zipcode",
                 text :$registration.address.zipCode,
@@ -89,10 +111,19 @@ struct RegistrationView: View {
                 ) in showClearZIP = editing
                 }
             )
-                .keyboardType(.decimalPad)
+            .keyboardType(.decimalPad)
             .accessibilityLabel("Zipcode")
-                .modifier(TFClearButton(input: $registration.address.zipCode, showButton: $showClearZIP))
-            CustomCardPicker(title: "Country", items: Registration.countries, selected: $registration.address.country)
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.zipCode,
+                    showButton: $showClearZIP
+                )
+            )
+            CustomCardPicker(
+                title: "Country",
+                items: Registration.countries,
+                selected: $registration.address.country
+            )
         }
     }
     

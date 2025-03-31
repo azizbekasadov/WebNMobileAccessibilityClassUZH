@@ -10,6 +10,7 @@
 		5D2ADFFA2D8D98F0007ACFD3 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFF92D8D98F0007ACFD3 /* View+.swift */; };
 		5D2ADFFC2D8D999D007ACFD3 /* Collection+_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */; };
 		5D2ADFFE2D8D9D02007ACFD3 /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */; };
+		5DF11A102D9B2546003B9275 /* UMDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF11A0F2D9B2546003B9275 /* UMDatePicker.swift */; };
 		CE9CD4C627984AC9006F1D33 /* University_Mobile_ExerciseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */; };
 		CE9CD4C827984AC9006F1D33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9CD4C727984AC9006F1D33 /* ContentView.swift */; };
 		CE9CD4CA27984ACC006F1D33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9CD4C927984ACC006F1D33 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		5D2ADFF92D8D98F0007ACFD3 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+_.swift"; sourceTree = "<group>"; };
 		5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
+		5DF11A0F2D9B2546003B9275 /* UMDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UMDatePicker.swift; sourceTree = "<group>"; };
 		CE988B7D279996B200F269DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE9CD4C227984AC9006F1D33 /* University Mobile Exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "University Mobile Exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = University_Mobile_ExerciseApp.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				CE9CD4E127984D99006F1D33 /* CustomCardPicker.swift */,
 				CE9CD4E327984DCA006F1D33 /* EnrollmentView.swift */,
 				CEB0787F279DF04900BCB9C8 /* TFClearButton.swift */,
+				5DF11A0F2D9B2546003B9275 /* UMDatePicker.swift */,
 			);
 			path = Enrollment;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				CE9CD4F227984E1A006F1D33 /* Restaurant.swift in Sources */,
 				CEB07880279DF04900BCB9C8 /* TFClearButton.swift in Sources */,
 				CE9CD4F427984F32006F1D33 /* MainView.swift in Sources */,
+				5DF11A102D9B2546003B9275 /* UMDatePicker.swift in Sources */,
 				CE9CD4DE27984D7F006F1D33 /* RegistrationView.swift in Sources */,
 				CE9CD4C627984AC9006F1D33 /* University_Mobile_ExerciseApp.swift in Sources */,
 				CE9CD4E427984DCA006F1D33 /* EnrollmentView.swift in Sources */,
