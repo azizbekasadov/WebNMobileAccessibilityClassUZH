@@ -1,3 +1,10 @@
+//
+//  RegistrationView.swift
+//  University Mobile ExerciseTests
+//
+//  Created by Azizbek Asadov on 21.03.2025.
+//
+
 import SwiftUI
 
 //RegistrationView represents the enrollment form view.
@@ -17,9 +24,26 @@ struct RegistrationView: View {
     var body: some View {
         VStack{
             Form{
-                PersonalDataSection()
-                AddressSection()
-                ProgramSection()
+                if #available(iOS 15.0, *) {
+                    PersonalDataSection()
+                        .accessibilityHeading(.h1)
+                } else {
+                    PersonalDataSection()
+                }
+                
+                if #available(iOS 15.0, *) {
+                    AddressSection()
+                        .accessibilityHeading(.h2)
+                } else {
+                    AddressSection()
+                }
+                
+                if #available(iOS 15.0, *) {
+                    ProgramSection()
+                        .accessibilityHeading(.h2)
+                } else {
+                    ProgramSection()
+                }
             }
         }
     }
@@ -56,21 +80,41 @@ struct RegistrationView: View {
                 )
             )
             
+            HStack {
+                Button(action: {
+                    showDatePicker.toggle()
+                }) {
+                    HStack {
+                        Text("Date of birth")
+                        Spacer()
+                        Text(registration.personalData.date_of_birth.format())
+                            .foregroundColor(.blue)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    "Date of birth, currently selected: \(registration.personalData.date_of_birth.format())"
+                )
+                .accessibilityHint(
+                    showDatePicker ? "Tap to collapse date picker" : "Tap to expand date picker"
+                )
+            }
+            
             UMDatePicker(
                 dateValue: $registration.personalData.date_of_birth
             )
             
             CustomCardPicker(
+                selected: $registration.personalData.gender,
                 title: "Gender",
                 items: Registration.genders,
-                selected: $registration.personalData.gender,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.personalData.nationality,
                 title: "Nationality",
-                items: Registration.countries,
-                selected: $registration.personalData.nationality
+                items: Registration.countries
             )
         }
     }
@@ -92,7 +136,9 @@ struct RegistrationView: View {
                 )
             )
             
-            TextField("City", text: $registration.address.city,
+            TextField(
+                "City",
+                text: $registration.address.city,
                       onEditingChanged: { (editing) in
                 showClearCity = editing
             })
@@ -119,7 +165,9 @@ struct RegistrationView: View {
                     showButton: $showClearZIP
                 )
             )
+            
             CustomCardPicker(
+                selected: $registration.address.country,
                 title: "Country",
                 items: Registration.countries,
                 selected: $registration.address.country
@@ -131,23 +179,23 @@ struct RegistrationView: View {
     private func ProgramSection() -> some View {
         Section(header: Text("Program")){
             CustomCardPicker(
+                selected: $registration.enrollment.semester,
                 title: "Semester",
                 items: Registration.semester,
-                selected: $registration.enrollment.semester,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.enrollment.department,
                 title: "Deparment",
                 items: Registration.departments,
-                selected: $registration.enrollment.department,
                 showSearchbar: false
             )
             
             CustomCardPicker(
+                selected: $registration.enrollment.degree,
                 title: "Degree",
                 items: Registration.degrees,
-                selected: $registration.enrollment.degree,
                 showSearchbar: false
             )
         }

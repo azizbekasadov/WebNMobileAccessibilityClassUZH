@@ -1,14 +1,23 @@
+//
+//  RestaurantView.swift
+//  University Mobile ExerciseTests
+//
+//  Created by Azizbek Asadov on 21.03.2025.
+//
+
 import SwiftUI
 
 //Restaurant View
 struct RestaurantView: View {
     var restaurant: Restaurant
     
+    @Environment(\.openURL) private var openURL
+    
     @State private var selectedTab: Int = 0
     @State private var rating: Double = 0.0
     
     func dateFormatter(date: Date) -> String {
-        return DateFormatter.localizedString(from: date, dateStyle:.none, timeStyle: .short)
+        DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
     }
     
     var body: some View {
@@ -22,13 +31,13 @@ struct RestaurantView: View {
             }
             .pickerStyle(.segmented)
             .padding()
-            .accessibilityHint("Toggle between Restaurant menu and Information")
-            
-            //Depending on the selected tab, the displayed view is changed
-            switch(selectedTab){
+            .accessibilityLabel("Tab Selection")
+            .accessibilityHint("Switch between restaurant menu and information")
+
+            switch(selectedTab) {
             case 0:
-                VStack(alignment: .leading){
-                    HStack(){
+                VStack(alignment: .leading) {
+                    HStack {
                         Spacer()
                         // Home Menu Card
                         ZStack{
@@ -40,34 +49,29 @@ struct RestaurantView: View {
                             VStack{
                                 Text("Home menu")
                                     .fontWeight(.bold)
-                                    .frame(maxWidth:150, alignment: .leading)
+                                    .accessibilityAddTraits(.isHeader)
+
                                 Text(restaurant.homeMenu.name)
-                                    .frame(maxWidth:150, alignment: .leading)
-                                
+
                                 Text("Ingredients")
-                                    .frame(maxWidth:150, alignment: .leading)
                                     .padding(.top)
-                                VStack(alignment: .leading) {
-                                    ForEach(restaurant.homeMenu.ingredients, id: \.self) { ingredient in
-                                        Text("-\(ingredient)")
-                                            .padding(3)
-                                            .cornerRadius(5)
-                                            .frame(maxWidth: 150, alignment: .leading)
-                                    }
+                                    .accessibilityAddTraits(.isHeader)
+
+                                ForEach(restaurant.homeMenu.ingredients, id: \.self) { tag in
+                                    Text("- \(tag)")
+                                        .accessibilityLabel(tag)
                                 }
                             }
                             .padding()
                         }
                         .fixedSize()
                         .accessibilityElement(children: .combine)
-                        .accessibilityLabel("Home menu: \(restaurant.homeMenu.name)")
-                        .accessibilityHint("Contains \(restaurant.homeMenu.ingredients.count) ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
-                        
+                        .accessibilityLabel("Home menu: \(restaurant.homeMenu.name). Ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
+
                         Spacer()
-                        
-                        // Vegi Menu Card
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 25)
                                 .fill(.white)
                                 .shadow(radius:10)
                                 .accessibilityHidden(true)
@@ -75,12 +79,12 @@ struct RestaurantView: View {
                             VStack{
                                 Text("Vegi menu")
                                     .fontWeight(.bold)
-                                    .frame(maxWidth:150, alignment: .leading)
+                                    .accessibilityAddTraits(.isHeader)
+
                                 Text(restaurant.vegiMenu.name)
                                     .frame(maxWidth:150, alignment: .leading)
                                 
                                 Text("Ingredients")
-                                    .frame(maxWidth:150, alignment: .leading)
                                     .padding(.top)
                                 
                                 VStack(alignment: .leading) {
@@ -111,6 +115,7 @@ struct RestaurantView: View {
                         Text("Opening Hours").font(.headline)
                         Text("\(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                             .padding(.bottom)
+                            .accessibilityLabel("Opening hours from \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Opening hours: \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
@@ -120,6 +125,7 @@ struct RestaurantView: View {
                         Text(restaurant.address)
                             .foregroundColor(Color("LightGray"))
                             .padding(.bottom)
+                            .accessibilityLabel("Address: \(restaurant.address)")
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Location: \(restaurant.address)")
@@ -164,6 +170,14 @@ struct RestaurantView: View {
                                 }
                                 Text("5")
                             }
+                            .padding(.bottom)
+                            .accessibilityLabel("Visit website")
+                            .accessibilityHint("Opens the restaurant website in browser")
+                            .accessibilityAddTraits(.isLink)
+                    }
+
+                    Section(header: Text("Rate our restaurant")
+                        .accessibilityAddTraits(.isHeader)) {
                             
                             Text("Rating: \(Int(rating)) stars")
                                 .padding(.bottom)
@@ -176,9 +190,12 @@ struct RestaurantView: View {
                 }
                 .padding()
             }
+
             Spacer()
         }
         .navigationBarTitle(restaurant.name, displayMode: .inline)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Restaurant: \(restaurant.name)")
     }
 }
 
