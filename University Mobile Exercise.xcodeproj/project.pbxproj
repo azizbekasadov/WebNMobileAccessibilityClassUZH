@@ -11,6 +11,7 @@
 		5D2ADFFC2D8D999D007ACFD3 /* Collection+_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */; };
 		5D2ADFFE2D8D9D02007ACFD3 /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */; };
 		5DF11A102D9B2546003B9275 /* UMDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF11A0F2D9B2546003B9275 /* UMDatePicker.swift */; };
+		5DF11A222D9B2708003B9275 /* CustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF11A212D9B2708003B9275 /* CustomPicker.swift */; };
 		CE9CD4C627984AC9006F1D33 /* University_Mobile_ExerciseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */; };
 		CE9CD4CA27984ACC006F1D33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9CD4C927984ACC006F1D33 /* Assets.xcassets */; };
 		CE9CD4CD27984ACC006F1D33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9CD4CC27984ACC006F1D33 /* Preview Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		5D2ADFFB2D8D999D007ACFD3 /* Collection+_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+_.swift"; sourceTree = "<group>"; };
 		5D2ADFFD2D8D9D02007ACFD3 /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		5DF11A0F2D9B2546003B9275 /* UMDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UMDatePicker.swift; sourceTree = "<group>"; };
+		5DF11A212D9B2708003B9275 /* CustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPicker.swift; sourceTree = "<group>"; };
 		CE988B7D279996B200F269DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE9CD4C227984AC9006F1D33 /* University Mobile Exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "University Mobile Exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9CD4C527984AC9006F1D33 /* University_Mobile_ExerciseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = University_Mobile_ExerciseApp.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		CE9CD4D427984CAC006F1D33 /* Enrollment */ = {
 			isa = PBXGroup;
 			children = (
+				5DF11A212D9B2708003B9275 /* CustomPicker.swift */,
 				CE9CD4DD27984D7F006F1D33 /* RegistrationView.swift */,
 				CE9CD4E127984D99006F1D33 /* CustomCardPicker.swift */,
 				CE9CD4E327984DCA006F1D33 /* EnrollmentView.swift */,
@@ -362,8 +365,8 @@
 				CE9CD4D827984D13006F1D33 /* RestaurantView.swift in Sources */,
 				CE9CD4EE27984DFF006F1D33 /* News.swift in Sources */,
 				CE9CD4E227984D99006F1D33 /* CustomCardPicker.swift in Sources */,
-				5DD71EB92D8F958F00A77548 /* CustomPicker.swift in Sources */,
 				5D2ADFFA2D8D98F0007ACFD3 /* View+.swift in Sources */,
+				5DF11A222D9B2708003B9275 /* CustomPicker.swift in Sources */,
 				CE9CD4E827984DE0006F1D33 /* ImageNewsView.swift in Sources */,
 				CE9CD4EC27984DF3006F1D33 /* NewsView.swift in Sources */,
 				CE9CD4E627984DD7006F1D33 /* NewsCardView.swift in Sources */,

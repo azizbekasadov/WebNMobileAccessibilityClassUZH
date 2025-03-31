@@ -82,7 +82,9 @@ struct RegistrationView: View {
             
             HStack {
                 Button(action: {
-                    showDatePicker.toggle()
+                    withAnimation {
+                        showDatePicker.toggle()
+                    }
                 }) {
                     HStack {
                         Text("Date of birth")
@@ -100,9 +102,11 @@ struct RegistrationView: View {
                 )
             }
             
-            UMDatePicker(
-                dateValue: $registration.personalData.date_of_birth
-            )
+            if showDatePicker {
+                UMDatePicker(
+                    dateValue: $registration.personalData.date_of_birth
+                )
+            }
             
             CustomCardPicker(
                 selected: $registration.personalData.gender,
@@ -169,8 +173,7 @@ struct RegistrationView: View {
             CustomCardPicker(
                 selected: $registration.address.country,
                 title: "Country",
-                items: Registration.countries,
-                selected: $registration.address.country
+                items: Registration.countries
             )
         }
     }
