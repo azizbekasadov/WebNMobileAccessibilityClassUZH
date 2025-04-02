@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Restaurant View
 struct RestaurantView: View {
     var restaurant: Restaurant
     
@@ -20,8 +21,9 @@ struct RestaurantView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Picker("", selection: $selectedTab) {
+        VStack (alignment: .leading){
+            //picker as top navigationtabbar
+            Picker("View Selection", selection: $selectedTab){
                 Text("Restaurant")
                     .tag(0)
                 Text("Info")
@@ -37,12 +39,14 @@ struct RestaurantView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Spacer()
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 25)
+                        // Home Menu Card
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 25, style: .continuous)
                                 .fill(.white)
-                                .shadow(radius: 10)
-
-                            VStack(alignment: .leading) {
+                                .shadow(radius:10)
+                                .accessibilityHidden(true)
+                            
+                            VStack{
                                 Text("Home menu")
                                     .fontWeight(.bold)
                                     .accessibilityAddTraits(.isHeader)
@@ -60,6 +64,7 @@ struct RestaurantView: View {
                             }
                             .padding()
                         }
+                        .fixedSize()
                         .accessibilityElement(children: .combine)
                         .accessibilityLabel("Home menu: \(restaurant.homeMenu.name). Ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
 
@@ -68,56 +73,102 @@ struct RestaurantView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(.white)
-                                .shadow(radius: 10)
-
-                            VStack(alignment: .leading) {
+                                .shadow(radius:10)
+                                .accessibilityHidden(true)
+                            
+                            VStack{
                                 Text("Vegi menu")
                                     .fontWeight(.bold)
                                     .accessibilityAddTraits(.isHeader)
 
                                 Text(restaurant.vegiMenu.name)
-
+                                    .frame(maxWidth:150, alignment: .leading)
+                                
                                 Text("Ingredients")
                                     .padding(.top)
-                                    .accessibilityAddTraits(.isHeader)
-
-                                ForEach(restaurant.vegiMenu.ingredients, id: \.self) { tag in
-                                    Text("- \(tag)")
-                                        .accessibilityLabel(tag)
+                                
+                                VStack(alignment: .leading) {
+                                    ForEach(restaurant.vegiMenu.ingredients, id: \.self) { ingredient in
+                                        Text("-\(ingredient)")
+                                            .padding(3)
+                                            .cornerRadius(10)
+                                            .frame(maxWidth: 150, alignment: .leading)
+                                    }
                                 }
                             }
                             .padding()
                         }
+                        .fixedSize()
                         .accessibilityElement(children: .combine)
-                        .accessibilityLabel("Vegetarian menu: \(restaurant.vegiMenu.name). Ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
-
+                        .accessibilityLabel("Vegetarian menu: \(restaurant.vegiMenu.name)")
+                        .accessibilityHint("Contains \(restaurant.vegiMenu.ingredients.count) ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
+                        
                         Spacer()
                     }
                 }
                 .padding()
-
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Available menus for today")
             default:
-                VStack(alignment: .leading) {
-                    Section(header: Text("Opening Hours")
-                        .accessibilityAddTraits(.isHeader)) {
+                VStack(alignment: .leading){
+                    Group {
+                        Text("Opening Hours").font(.headline)
                         Text("\(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                             .padding(.bottom)
                             .accessibilityLabel("Opening hours from \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                     }
-
-                    Section(header: Text("Location")
-                        .accessibilityAddTraits(.isHeader)) {
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Opening hours: \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
+                    
+                    Group {
+                        Text("Location").font(.headline)
                         Text(restaurant.address)
                             .foregroundColor(Color("LightGray"))
                             .padding(.bottom)
                             .accessibilityLabel("Address: \(restaurant.address)")
                     }
-
-                    Section(header: Text("Contact")
-                        .accessibilityAddTraits(.isHeader)) {
-                        Text("Website")
-                            .onTapGesture {
-                                openURL(URL(string:"https://google.ch")!)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Location: \(restaurant.address)")
+                    
+                    Group {
+                        Text("Contact").font(.headline)
+                        Button("Visit Website") {
+                            UIApplication.shared.open(URL(string: "https://google.ch")!)
+                        }
+                        .padding(.bottom)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Contact: Visit Website")
+                    .accessibilityHint("Opens the restaurant website in your browser")
+                    
+                    Group {
+                        Text("Rate our restaurant").font(.headline)
+                        VStack {
+                            HStack {
+                                Text("0")
+                                Slider(
+                                    value: $rating,
+                                    in: 0...5,
+                                    step: 1
+                                )
+                                .accessibilityValue("\(Int(rating)) stars out of 5")
+                                .accessibilityAdjustableAction { direction in
+                                    switch direction {
+                                    case .increment:
+                                        if rating < 5 { 
+                                            rating += 1 
+                                            UIAccessibility.post(notification: .announcement, argument: "\(Int(rating)) stars")
+                                        }
+                                    case .decrement:
+                                        if rating > 0 { 
+                                            rating -= 1 
+                                            UIAccessibility.post(notification: .announcement, argument: "\(Int(rating)) stars")
+                                        }
+                                    @unknown default:
+                                        break
+                                    }
+                                }
+                                Text("5")
                             }
                             .padding(.bottom)
                             .accessibilityLabel("Visit website")
@@ -128,19 +179,14 @@ struct RestaurantView: View {
                     Section(header: Text("Rate our restaurant")
                         .accessibilityAddTraits(.isHeader)) {
                             
-                        Slider(
-                            value: $rating,
-                            in: 0...5,
-                            step: 1
-                        )
-                        .accessibilityLabel("Rating slider")
-                        .accessibilityValue("\(Int(rating)) out of 5")
-                        .accessibilityHint("Adjust to rate the restaurant")
-
-                        Text("Rating: \(Int(rating))")
-                            .padding(.bottom)
-                            .accessibilityHidden(true)
+                            Text("Rating: \(Int(rating)) stars")
+                                .padding(.bottom)
+                                .accessibilityHidden(true)
+                        }
                     }
+                    .accessibilityElement(children: .contain)
+                    .accessibilityLabel("Rate our restaurant")
+                    .accessibilityHint("Swipe up or down to change rating from 0 to 5 stars")
                 }
                 .padding()
             }
