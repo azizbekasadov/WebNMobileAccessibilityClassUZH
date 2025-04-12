@@ -50,8 +50,7 @@ struct RegistrationView: View {
     
     @ViewBuilder
     private func PersonalDataSection() -> some View {
-        Section(header: Text("Personal Data"))
-        {
+        Section(header: Text("Personal Data")){
             TextField(
                 "First Name",
                 text: $registration.personalData.first_name,
@@ -83,7 +82,9 @@ struct RegistrationView: View {
             
             HStack {
                 Button(action: {
-                    showDatePicker.toggle()
+                    withAnimation {
+                        showDatePicker.toggle()
+                    }
                 }) {
                     HStack {
                         Text("Date of birth")
@@ -102,13 +103,9 @@ struct RegistrationView: View {
             }
             
             if showDatePicker {
-                DatePicker(
-                    "Select your date of birth",
-                    selection: $registration.personalData.date_of_birth,
-                    displayedComponents: .date
+                UMDatePicker(
+                    dateValue: $registration.personalData.date_of_birth
                 )
-                .datePickerStyle(.graphical)
-                .accessibilityLabel("Date picker for date of birth")
             }
             
             CustomCardPicker(
@@ -135,13 +132,13 @@ struct RegistrationView: View {
                       onEditingChanged: { (editing) in
                 showClearAddress = editing
             })
-                .accessibilityLabel("Street and Number")
-                .modifier(
-                    TFClearButton(
-                        input: $registration.address.street_and_number,
-                        showButton: $showClearAddress
-                    )
+            .accessibilityLabel("Street and Number")
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.street_and_number,
+                    showButton: $showClearAddress
                 )
+            )
             
             TextField(
                 "City",
@@ -149,13 +146,13 @@ struct RegistrationView: View {
                       onEditingChanged: { (editing) in
                 showClearCity = editing
             })
-                .accessibilityLabel("City")
-                .modifier(
-                    TFClearButton(
-                        input: $registration.address.city,
-                        showButton: $showClearCity
-                    )
+            .accessibilityLabel("City")
+            .modifier(
+                TFClearButton(
+                    input: $registration.address.city,
+                    showButton: $showClearCity
                 )
+            )
             TextField(
                 "Zipcode",
                 text :$registration.address.zipCode,
@@ -164,7 +161,7 @@ struct RegistrationView: View {
                 ) in showClearZIP = editing
                 }
             )
-                .keyboardType(.decimalPad)
+            .keyboardType(.decimalPad)
             .accessibilityLabel("Zipcode")
             .modifier(
                 TFClearButton(
