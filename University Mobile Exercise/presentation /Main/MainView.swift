@@ -24,11 +24,23 @@ struct TabViewFactory: TabViewFactoryProtocol {
     func make(for tab: Tabs) -> AnyView {
         switch tab {
         case .news:
-            return  AnyView(NewsView().tab(tab.tabItem))
+            return  AnyView(
+                NewsView()
+                    .tab(tab.tabItem)
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+            )
         case .meals:
-            return AnyView(MealsView().tab(tab.tabItem))
+            return AnyView(
+                MealsView()
+                    .tab(tab.tabItem)
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+            )
         case .enroll:
-            return AnyView(EnrollmentView().tab(tab.tabItem))
+            return AnyView(
+                EnrollmentView()
+                    .tab(tab.tabItem)
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+            )
         }
     }
 }
