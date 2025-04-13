@@ -14,14 +14,17 @@ struct ImageNewsView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
-                    Text(news.title)
-                        .font(.title)
-                        .accessibilityAddTraits(.isHeader)
-                        .accessibilityLabel("Title: \(news.title)")
-
-                    Text(news.date.format())
-                        .font(.caption2)
-                        .accessibilityLabel("Published on \(news.date.format())")
+                    if #available(iOS 15, *) {
+                        TitleView()
+                            .dynamicTypeSize(.medium ... .accessibility5)
+                        
+                        DateFormatView()
+                            .dynamicTypeSize(.medium ... .accessibility5)
+                    } else {
+                        TitleView()
+                        
+                        DateFormatView()
+                    }
                 }
                 .padding(.bottom)
 
@@ -31,15 +34,40 @@ struct ImageNewsView: View {
                     .accessibilityLabel("Image related to \(news.title)")
                     .accessibilityHint("Visual content associated with the news article")
 
-                Text(news.text)
-                    .accessibilityLabel("Full article text: \(news.text)")
+                if #available(iOS 15, *) {
+                    FullArticleTextView()
+                        .dynamicTypeSize(.medium ... .accessibility5)
+                } else {
+                    FullArticleTextView()
+                }
 
                 Spacer()
             }
             .padding()
-            .accessibilityElement(children: .contain)
+            .accessibilityElement(children: .combine)
             .accessibilityLabel("News Article: \(news.title). Published on \(news.date.format()). \(news.text)")
         }
+    }
+    
+    @ViewBuilder
+    private func FullArticleTextView() -> some View {
+        Text(news.text)
+            .accessibilityLabel("Full article text: \(news.text)")
+    }
+    
+    @ViewBuilder
+    private func TitleView() -> some View {
+        Text(news.title)
+            .font(.title)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityLabel("Title: \(news.title)")
+    }
+    
+    @ViewBuilder
+    private func DateFormatView() -> some View {
+        Text(news.date.format())
+            .font(.caption2)
+            .accessibilityLabel("Published on \(news.date.format())")
     }
 }
 
