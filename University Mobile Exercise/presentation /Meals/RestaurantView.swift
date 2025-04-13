@@ -116,6 +116,8 @@ struct RestaurantView: View {
                 .accessibilityLabel("Available menus for today")
             default:
                 VStack(alignment: .leading, spacing: 16) {
+                    let start = restaurant.openingTimesInterval.start.format(.short)
+                    let end = restaurant.openingTimesInterval.end.format(.short)
                     
                     // Opening Hours
                     VStack(alignment: .leading, spacing: 4) {
@@ -123,14 +125,13 @@ struct RestaurantView: View {
                             .font(.headline)
                             .accessibilityAddTraits(.isHeader)
 
-                        let start = restaurant.openingTimesInterval.start.format(.short)
-                        let end = restaurant.openingTimesInterval.end.format(.short)
+                        
                         
                         Text("\(start) to \(end)")
                             .accessibilityLabel("Opening hours from \(start) to \(end)")
                     }
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel("Opening hours: \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
+                    .accessibilityLabel("Opening hours: \(start) to \(end)")
                     
                     // Location
                     VStack(alignment: .leading, spacing: 4) {
