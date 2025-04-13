@@ -6,34 +6,47 @@
 //
 
 import SwiftUI
+import SwiftUI
 
 struct MealsView: View {
-    //Load sample restaurant models from the Restaurant class
+    // Load sample restaurant models
     let mensas: [Restaurant] = Restaurant.sampleData
     
-    
     var body: some View {
-        NavigationView{
-            List{
-                ForEach(mensas){ m in
-                    NavigationLink(destination: RestaurantView(restaurant: m)){
-                        RestaurantCardView(restaurant: m)
-                            .accessibilityIdentifier("restaurantCard_\(m.id.uuidString)")
-                    }
+        NavigationView {
+            if #available(iOS 15, *) {
+                ListContent()
+                    .dynamicTypeSize(.medium ... .accessibility5)
+            } else {
+                ListContent()
+            }
+        }
+        .navigationViewStyle(.stack)
+        .accessibilityIdentifier("restaurantListNavigationView")
+    }
+    
+    @ViewBuilder
+    private func ListContent() -> some View {
+        List {
+            ForEach(mensas) { restaurant in
+                NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
+                    RestaurantCardView(restaurant: restaurant)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("\(restaurant.name). Double tap to view restaurant details.")
+                        .accessibilityAddTraits(.isButton)
+                        .accessibilityIdentifier("restaurantCard_\(restaurant.id.uuidString)")
                 }
             }
-            .accessibilityIdentifier("restaurantList")
-            .navigationTitle("Restaurants")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationViewStyle(.stack)
         }
+        .accessibilityIdentifier("restaurantList")
+        .accessibilityLabel("List of restaurants")
+        .accessibilityHint("Swipe to browse restaurants, double tap to select")
+        .navigationTitle("Restaurants")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct MealsView_Previews: PreviewProvider{
-    static var previews: some View{
-            MealsView()
-        
-    }
+#Preview {
+    MealsView()
 }
 

@@ -22,6 +22,16 @@ struct RegistrationView: View {
     @State private var showClearZIP: Bool = false
     
     var body: some View {
+        if #available(iOS 15, *) {
+            MainView()
+                .dynamicTypeSize(.medium ... .accessibility5)
+        } else {
+            MainView()
+        }
+    }
+    
+    @ViewBuilder
+    private func MainView() -> some View {
         VStack{
             Form{
                 if #available(iOS 15.0, *) {
@@ -183,7 +193,9 @@ struct RegistrationView: View {
     
     @ViewBuilder
     private func ProgramSection() -> some View {
-        Section(header: Text("Program")){
+        Section(
+            header: HeaderView()
+        ){
             CustomCardPicker(
                 selected: $registration.enrollment.semester,
                 title: "Semester",
@@ -204,6 +216,16 @@ struct RegistrationView: View {
                 items: Registration.degrees,
                 showSearchbar: false
             )
+        }
+    }
+    
+    @ViewBuilder
+    private func HeaderView() -> some View {
+        if #available(iOS 15.0, *) {
+            Text("Program")
+                .dynamicTypeSize(.medium ... .accessibility5)
+        } else {
+            Text("Program")
         }
     }
 }

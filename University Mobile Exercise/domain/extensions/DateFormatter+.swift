@@ -14,13 +14,33 @@ extension DateFormatter {
         return dateFormatter
     }()
     
+    fileprivate static func dateFormatterShort(date: Date) -> String {
+        DateFormatter.localizedString(
+            from: date,
+            dateStyle: .none,
+            timeStyle: .short
+        )
+    }
+    
     static func format(date: Date) -> String {
         DateFormatter.dateFormatter.string(from: date)
     }
 }
 
 extension Date {
-    func format() -> String {
-        DateFormatter.format(date: self)
+    enum FormatSemantics {
+        case usual
+        case short
+    }
+    
+    func format(
+        _ semantics: FormatSemantics = .usual
+    ) -> String {
+        switch semantics {
+        case .usual:
+            DateFormatter.format(date: self)
+        case .short:
+            DateFormatter.dateFormatterShort(date: self)
+        }
     }
 }

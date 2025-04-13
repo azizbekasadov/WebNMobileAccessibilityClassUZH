@@ -24,17 +24,27 @@ struct CustomCardPicker: View {
                 showSearchbar: showSearchbar
             )
         ){
-            HStack(){
-                Text(title)
-                Spacer()
-                Text(selected)
-                    .fontWeight(.light)
+            if #available(iOS 15, *) {
+                DestinationView()
+                    .dynamicTypeSize(.medium ... .accessibility5)
+            } else {
+                DestinationView()
             }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text(title))
-            .accessibilityValue(Text(selected))
-            
         }
+    }
+    
+    @ViewBuilder
+    private func DestinationView() -> some View{
+        HStack(){
+            Text(title)
+            
+            Spacer()
+            Text(selected)
+                .fontWeight(.light)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(title))
+        .accessibilityValue(Text(selected))
     }
 }
 

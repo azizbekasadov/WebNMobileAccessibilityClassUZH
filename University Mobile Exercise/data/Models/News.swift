@@ -32,7 +32,7 @@ class News: Identifiable{
 
 
 // Subclass of the news class. Additionaly to the news class, which only displays textual information, the ImageNews class displays also an image.
-class ImageNews: News {
+final class ImageNews: News {
     
     //name of the image, stored in the assets
     var imageName: String
@@ -48,11 +48,7 @@ class ImageNews: News {
     }
 }
 
-
-
-
-
-class Publication: News{}
+final class Publication: News{}
 
 
 //Sample instance of the news class which are displayed as a list of news in the news view
