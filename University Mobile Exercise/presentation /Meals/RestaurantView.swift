@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+//Restaurant View
 struct RestaurantView: View {
     var restaurant: Restaurant
     
@@ -42,12 +43,14 @@ struct RestaurantView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Spacer()
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 25)
+                        // Home Menu Card
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 25, style: .continuous)
                                 .fill(.white)
-                                .shadow(radius: 10)
-
-                            VStack(alignment: .leading) {
+                                .shadow(radius:10)
+                                .accessibilityHidden(true)
+                            
+                            VStack{
                                 Text("Home menu")
                                     .fontWeight(.bold)
                                     .accessibilityAddTraits(.isHeader)
@@ -66,6 +69,7 @@ struct RestaurantView: View {
                             }
                             .padding()
                         }
+                        .fixedSize()
                         .accessibilityElement(children: .combine)
                         .accessibilityLabel("Home menu: \(restaurant.homeMenu.name). Ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
 
@@ -74,34 +78,42 @@ struct RestaurantView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(.white)
-                                .shadow(radius: 10)
-
-                            VStack(alignment: .leading) {
+                                .shadow(radius:10)
+                                .accessibilityHidden(true)
+                            
+                            VStack{
                                 Text("Vegi menu")
                                     .fontWeight(.bold)
                                     .accessibilityAddTraits(.isHeader)
 
                                 Text(restaurant.vegiMenu.name)
-
+                                    .frame(maxWidth:150, alignment: .leading)
+                                
                                 Text("Ingredients")
                                     .padding(.top)
-                                    .accessibilityAddTraits(.isHeader)
-
-                                ForEach(restaurant.vegiMenu.ingredients, id: \.self) { tag in
-                                    Text("- \(tag)")
-                                        .accessibilityLabel(tag)
+                                
+                                VStack(alignment: .leading) {
+                                    ForEach(restaurant.vegiMenu.ingredients, id: \.self) { ingredient in
+                                        Text("-\(ingredient)")
+                                            .padding(3)
+                                            .cornerRadius(10)
+                                            .frame(maxWidth: 150, alignment: .leading)
+                                    }
                                 }
                             }
                             .padding()
                         }
+                        .fixedSize()
                         .accessibilityElement(children: .combine)
-                        .accessibilityLabel("Vegetarian menu: \(restaurant.vegiMenu.name). Ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
-
+                        .accessibilityLabel("Vegetarian menu: \(restaurant.vegiMenu.name)")
+                        .accessibilityHint("Contains \(restaurant.vegiMenu.ingredients.count) ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
+                        
                         Spacer()
                     }
                 }
                 .padding()
-
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Available menus for today")
             default:
                 VStack(alignment: .leading, spacing: 16) {
                     
@@ -118,6 +130,7 @@ struct RestaurantView: View {
                             .accessibilityLabel("Opening hours from \(start) to \(end)")
                     }
                     .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Opening hours: \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                     
                     // Location
                     VStack(alignment: .leading, spacing: 4) {
@@ -157,6 +170,8 @@ struct RestaurantView: View {
                         RatingSlider(restaurantName: restaurant.name)
                     }
                     .accessibilityElement(children: .contain)
+                    .accessibilityLabel("Rate our restaurant")
+                    .accessibilityHint("Swipe up or down to change rating from 0 to 5 stars")
                 }
                 .padding()
             }
