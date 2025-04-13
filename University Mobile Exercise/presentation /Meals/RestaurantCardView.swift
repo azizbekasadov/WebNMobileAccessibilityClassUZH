@@ -7,27 +7,48 @@
 
 import SwiftUI
 import Foundation
+import SwiftUI
+import Foundation
 
 struct RestaurantCardView: View {
     let restaurant: Restaurant
 
     var body: some View {
-        VStack(alignment: .leading) {
+        if #available(iOS 15, *) {
+            MainView()
+                .dynamicTypeSize(.medium ... .accessibility5)
+        } else {
+            MainView()
+        }
+    }
+    
+    @ViewBuilder
+    private func MainView() -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Restaurant name
             Text(restaurant.name)
                 .font(.headline)
+                .foregroundColor(.primary)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityLabel("Restaurant name: \(restaurant.name)")
 
+            // Restaurant image
             Image(restaurant.imageName)
                 .resizable()
-                .frame(width: 250.0 , height: 100.0)
+                .scaledToFill()
+                .frame(width: 250, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .accessibilityLabel("Image of \(restaurant.name)")
                 .accessibilityHint("Visual representation of the restaurant")
+                .accessibilityAddTraits(.isImage)
         }
         .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 4)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(restaurant.name), Restaurant card")
+        .accessibilityLabel("\(restaurant.name). Double tap to view more information.")
+        .accessibilityAddTraits(.isButton) // Important for VoiceOver to treat this as a tappable item
     }
 }
 

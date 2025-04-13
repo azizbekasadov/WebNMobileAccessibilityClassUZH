@@ -4,7 +4,6 @@
 //
 //  Created by Azizbek Asadov on 21.03.2025.
 //
-
 import SwiftUI
 
 //Restaurant View
@@ -16,14 +15,19 @@ struct RestaurantView: View {
     @State private var selectedTab: Int = 0
     @State private var rating: Double = 0.0
     
-    func dateFormatter(date: Date) -> String {
-        DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
+    var body: some View {
+        if #available(iOS 15, *) {
+            MainView()
+                .dynamicTypeSize(.medium ... .accessibility5)
+        } else {
+            MainView()
+        }
     }
     
-    var body: some View {
-        VStack (alignment: .leading){
-            //picker as top navigationtabbar
-            Picker("View Selection", selection: $selectedTab){
+    @ViewBuilder
+    private func MainView() -> some View {
+        VStack(alignment: .leading) {
+            Picker("", selection: $selectedTab) {
                 Text("Restaurant")
                     .tag(0)
                 Text("Info")
@@ -52,6 +56,7 @@ struct RestaurantView: View {
                                     .accessibilityAddTraits(.isHeader)
 
                                 Text(restaurant.homeMenu.name)
+                                    .accessibilityLabel(Text(restaurant.homeMenu.name))
 
                                 Text("Ingredients")
                                     .padding(.top)
@@ -59,7 +64,7 @@ struct RestaurantView: View {
 
                                 ForEach(restaurant.homeMenu.ingredients, id: \.self) { tag in
                                     Text("- \(tag)")
-                                        .accessibilityLabel(tag)
+                                        .accessibilityLabel("Restaurant Home Menu Ingridients " + tag)
                                 }
                             }
                             .padding()
@@ -110,79 +115,59 @@ struct RestaurantView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityLabel("Available menus for today")
             default:
-                VStack(alignment: .leading){
-                    Group {
-                        Text("Opening Hours").font(.headline)
-                        Text("\(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
-                            .padding(.bottom)
-                            .accessibilityLabel("Opening hours from \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
+                VStack(alignment: .leading, spacing: 16) {
+                    
+                    // Opening Hours
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Opening Hours")
+                            .font(.headline)
+                            .accessibilityAddTraits(.isHeader)
+
+                        let start = restaurant.openingTimesInterval.start.format(.short)
+                        let end = restaurant.openingTimesInterval.end.format(.short)
+                        
+                        Text("\(start) to \(end)")
+                            .accessibilityLabel("Opening hours from \(start) to \(end)")
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Opening hours: \(dateFormatter(date: restaurant.openingTimesInterval.start)) to \(dateFormatter(date: restaurant.openingTimesInterval.end))")
                     
-                    Group {
-                        Text("Location").font(.headline)
+                    // Location
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Location")
+                            .font(.headline)
+                            .accessibilityAddTraits(.isHeader)
+
                         Text(restaurant.address)
-                            .foregroundColor(Color("LightGray"))
-                            .padding(.bottom)
+                            .foregroundColor(.primary) // replaces LightGray for contrast
                             .accessibilityLabel("Address: \(restaurant.address)")
                     }
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel("Location: \(restaurant.address)")
                     
-                    Group {
-                        Text("Contact").font(.headline)
-                        Button("Visit Website") {
-                            UIApplication.shared.open(URL(string: "https://google.ch")!)
-                        }
-                        .padding(.bottom)
+                    // Contact
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Contact")
+                            .font(.headline)
+                            .accessibilityAddTraits(.isHeader)
+
+                        Text("Website")
+                            .foregroundColor(.blue)
+                            .onTapGesture {
+                                openURL(URL(string: "https://google.ch")!)
+                            }
+                            .accessibilityLabel("Visit restaurant website")
+                            .accessibilityHint("Opens the website in Safari")
+                            .accessibilityAddTraits([.isLink, .isButton])
                     }
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel("Contact: Visit Website")
-                    .accessibilityHint("Opens the restaurant website in your browser")
-                    
-                    Group {
-                        Text("Rate our restaurant").font(.headline)
-                        VStack {
-                            HStack {
-                                Text("0")
-                                Slider(
-                                    value: $rating,
-                                    in: 0...5,
-                                    step: 1
-                                )
-                                .accessibilityValue("\(Int(rating)) stars out of 5")
-                                .accessibilityAdjustableAction { direction in
-                                    switch direction {
-                                    case .increment:
-                                        if rating < 5 { 
-                                            rating += 1 
-                                            UIAccessibility.post(notification: .announcement, argument: "\(Int(rating)) stars")
-                                        }
-                                    case .decrement:
-                                        if rating > 0 { 
-                                            rating -= 1 
-                                            UIAccessibility.post(notification: .announcement, argument: "\(Int(rating)) stars")
-                                        }
-                                    @unknown default:
-                                        break
-                                    }
-                                }
-                                Text("5")
-                            }
-                            .padding(.bottom)
-                            .accessibilityLabel("Visit website")
-                            .accessibilityHint("Opens the restaurant website in browser")
-                            .accessibilityAddTraits(.isLink)
-                    }
 
-                    Section(header: Text("Rate our restaurant")
-                        .accessibilityAddTraits(.isHeader)) {
-                            
-                            Text("Rating: \(Int(rating)) stars")
-                                .padding(.bottom)
-                                .accessibilityHidden(true)
-                        }
+                    // Rating
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Rate our restaurant")
+                            .font(.headline)
+                            .accessibilityAddTraits(.isHeader)
+
+                        RatingSlider(restaurantName: restaurant.name)
                     }
                     .accessibilityElement(children: .contain)
                     .accessibilityLabel("Rate our restaurant")
@@ -194,8 +179,29 @@ struct RestaurantView: View {
             Spacer()
         }
         .navigationBarTitle(restaurant.name, displayMode: .inline)
-        .accessibilityElement(children: .contain)
+        .accessibilityElement(children: .combine)
         .accessibilityLabel("Restaurant: \(restaurant.name)")
+    }
+    
+    @ViewBuilder
+    private func RatingSlider(restaurantName: String) -> some View {
+        VStack {
+            Slider(
+                value: $rating,
+                in: 0...5,
+                step: 1
+            )
+            .accessibilityElement()
+            .accessibilityLabel("Rating for \(restaurantName)")
+            .accessibilityValue("\(Int(rating)) out of 5 stars")
+            .accessibilityHint("Swipe up or down to adjust the rating")
+
+            Text("Rating: \(Int(rating))")
+                .padding(.bottom)
+                .accessibilityLabel("Rating is \(Int(rating)) out of 5 stars")
+                .accessibilityHidden(true)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
