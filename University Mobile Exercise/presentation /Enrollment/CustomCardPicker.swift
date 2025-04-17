@@ -37,14 +37,16 @@ struct CustomCardPicker: View {
     private func DestinationView() -> some View{
         HStack(){
             Text(title)
+                .foregroundColor(.primary)
             
             Spacer()
             Text(selected)
                 .fontWeight(.light)
+                .foregroundColor(.primary)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(title))
-        .accessibilityValue(Text(selected))
+        .accessibilityLabel(Text(title).foregroundColor(.primary))
+        .accessibilityValue(Text(selected).foregroundColor(.primary))
     }
 }
 

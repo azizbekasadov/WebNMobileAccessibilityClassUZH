@@ -39,8 +39,8 @@ struct EnrollmentView: View {
                 Text("Submit")
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .foregroundColor(Color(UIColor.systemBackground))
                     .cornerRadius(8)
             }
             .accessibilityLabel("Submit enrollment")

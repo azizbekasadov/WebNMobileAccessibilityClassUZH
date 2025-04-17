@@ -39,22 +39,26 @@ struct CustomPicker: View {
             if #available(iOS 17.0, *) {
                 Text(title)
                     .font(.headline)
+                    .foregroundColor(.primary)
                     .accessibilityHeading(.h1)
             } else {
                 Text(title)
                     .font(.headline)
+                    .foregroundColor(.primary)
                     .accessibilityAddTraits(.isHeader)
             }
 
             if showSearchbar {
                 TextField("Search", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .foregroundColor(.primary)
                     .accessibilityLabel("Search items")
             }
 
             List(filteredItems, id: \.self) { item in
                 HStack {
                     Text(item)
+                        .foregroundColor(.primary)
                     Spacer()
                     if item == selected {
                         Image(systemName: "checkmark")
@@ -71,7 +75,7 @@ struct CustomPicker: View {
             }
         }
         .padding()
-        .navigationTitle(Text(title))
+        .navigationTitle(Text(title).foregroundColor(.primary))
     }
 }
 

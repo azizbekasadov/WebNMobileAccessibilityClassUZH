@@ -29,8 +29,10 @@ struct RestaurantView: View {
         VStack(alignment: .leading) {
             Picker("", selection: $selectedTab) {
                 Text("Restaurant")
+                    .foregroundColor(.primary)
                     .tag(0)
                 Text("Info")
+                    .foregroundColor(.primary)
                     .tag(1)
             }
             .pickerStyle(.segmented)
@@ -46,13 +48,14 @@ struct RestaurantView: View {
                         // Home Menu Card
                         ZStack{
                             RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                .fill(.white)
+                                .fill(Color(UIColor.systemBackground))
                                 .shadow(radius:10)
                                 .accessibilityHidden(true)
                             
                             VStack{
                                 Text("Home menu")
                                     .fontWeight(.bold)
+                                    .foregroundColor(.primary)
                                     .accessibilityAddTraits(.isHeader)
 
                                 Text(restaurant.homeMenu.name)
@@ -60,10 +63,12 @@ struct RestaurantView: View {
 
                                 Text("Ingredients")
                                     .padding(.top)
+                                    .foregroundColor(.primary)
                                     .accessibilityAddTraits(.isHeader)
 
                                 ForEach(restaurant.homeMenu.ingredients, id: \.self) { tag in
                                     Text("- \(tag)")
+                                        .foregroundColor(.primary)
                                         .accessibilityLabel("Restaurant Home Menu Ingridients " + tag)
                                 }
                             }
@@ -77,26 +82,30 @@ struct RestaurantView: View {
 
                         ZStack {
                             RoundedRectangle(cornerRadius: 25)
-                                .fill(.white)
+                                .fill(Color(UIColor.systemBackground))
                                 .shadow(radius:10)
                                 .accessibilityHidden(true)
                             
                             VStack{
                                 Text("Vegi menu")
                                     .fontWeight(.bold)
+                                    .foregroundColor(.primary)
                                     .accessibilityAddTraits(.isHeader)
 
                                 Text(restaurant.vegiMenu.name)
                                     .frame(maxWidth:150, alignment: .leading)
+                                    .foregroundColor(.primary)
                                 
                                 Text("Ingredients")
                                     .padding(.top)
+                                    .foregroundColor(.primary)
                                 
                                 VStack(alignment: .leading) {
                                     ForEach(restaurant.vegiMenu.ingredients, id: \.self) { ingredient in
                                         Text("-\(ingredient)")
                                             .padding(3)
                                             .cornerRadius(10)
+                                            .foregroundColor(.primary)
                                             .frame(maxWidth: 150, alignment: .leading)
                                     }
                                 }
@@ -123,11 +132,13 @@ struct RestaurantView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Opening Hours")
                             .font(.headline)
+                            .foregroundColor(.primary)
                             .accessibilityAddTraits(.isHeader)
 
                         
                         
                         Text("\(start) to \(end)")
+                            .foregroundColor(.primary)
                             .accessibilityLabel("Opening hours from \(start) to \(end)")
                     }
                     .accessibilityElement(children: .combine)
@@ -137,10 +148,12 @@ struct RestaurantView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Location")
                             .font(.headline)
+                            .foregroundColor(.primary)
                             .accessibilityAddTraits(.isHeader)
 
                         Text(restaurant.address)
                             .foregroundColor(.primary) // replaces LightGray for contrast
+                            .foregroundColor(.primary)
                             .accessibilityLabel("Address: \(restaurant.address)")
                     }
                     .accessibilityElement(children: .combine)
@@ -149,10 +162,12 @@ struct RestaurantView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Contact")
                             .font(.headline)
+                            .foregroundColor(.primary)
                             .accessibilityAddTraits(.isHeader)
 
                         Text("Website")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.accentColor)
+                            .foregroundColor(.primary)
                             .onTapGesture {
                                 openURL(URL(string: "https://google.ch")!)
                             }
@@ -166,6 +181,7 @@ struct RestaurantView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Rate our restaurant")
                             .font(.headline)
+                            .foregroundColor(.primary)
                             .accessibilityAddTraits(.isHeader)
 
                         RatingSlider(restaurantName: restaurant.name)
@@ -199,6 +215,7 @@ struct RestaurantView: View {
 
             Text("Rating: \(Int(rating))")
                 .padding(.bottom)
+                .foregroundColor(.primary)
                 .accessibilityLabel("Rating is \(Int(rating)) out of 5 stars")
                 .accessibilityHidden(true)
         }

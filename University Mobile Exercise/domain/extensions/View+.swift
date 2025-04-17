@@ -34,6 +34,7 @@ extension View {
             
             if let title = tabItem.title, tabItem.title.isEmptyOrNil {
                 Text(title)
+                    .foregroundColor(.primary)
             }
         }
         .accessibilityLabel(Text(tabItem.imageName))
@@ -47,6 +48,7 @@ extension View {
             Image(systemName: systemIcon)
             if !title.isEmpty {
                 Text(title)
+                    .foregroundColor(.primary)
             }
         }
     }

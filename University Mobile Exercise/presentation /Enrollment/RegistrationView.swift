@@ -60,7 +60,7 @@ struct RegistrationView: View {
     
     @ViewBuilder
     private func PersonalDataSection() -> some View {
-        Section(header: Text("Personal Data")){
+        Section(header: Text("Personal Data").foregroundColor(.primary)){
             TextField(
                 "First Name",
                 text: $registration.personalData.first_name,
@@ -68,6 +68,7 @@ struct RegistrationView: View {
                     showClearFirstname = editing
                 }
             )
+            .foregroundColor(.primary)
             .accessibilityLabel("First name")
             .modifier(
                 TFClearButton(
@@ -100,7 +101,7 @@ struct RegistrationView: View {
                         Text("Date of birth")
                         Spacer()
                         Text(registration.personalData.date_of_birth.format())
-                            .foregroundColor(.blue)
+                            .foregroundColor(.accentColor)
                     }
                 }
                 .accessibilityElement(children: .combine)
@@ -221,8 +222,10 @@ struct RegistrationView: View {
         if #available(iOS 15.0, *) {
             Text("Program")
                 .dynamicTypeSize(.medium ... .accessibility5)
+                .foregroundColor(.primary)
         } else {
             Text("Program")
+                .foregroundColor(.primary)
         }
     }
 }
