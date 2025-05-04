@@ -100,7 +100,7 @@ struct RegistrationView: View {
                         Text("Date of birth")
                         Spacer()
                         Text(registration.personalData.date_of_birth.format())
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color(UIColor.link))
                     }
                 }
                 .accessibilityElement(children: .combine)

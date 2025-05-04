@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct UMDatePicker: View {
-    private let title: String = "Date of birth"
+    private let title: String = "Selected date of birth"
     
     @Binding var dateValue: Date
     
@@ -20,9 +20,11 @@ struct UMDatePicker: View {
                 selection: $dateValue,
                 displayedComponents: .date
             )
+            .datePickerStyle(.wheel)
             .accessibilityLabel(title + " picker")
-            .accessibilityValue(dateValue.format())
             .accessibilityHint("Double tap to change date")
+            .accessibilityValue(Text(dateValue.format()))
+            .accessibilityAddTraits(.updatesFrequently)
         }
         .accessibilityElement(children: .combine)
     }

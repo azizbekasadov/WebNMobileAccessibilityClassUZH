@@ -39,17 +39,23 @@ struct CustomPicker: View {
             if #available(iOS 17.0, *) {
                 Text(title)
                     .font(.headline)
+                    .accessibilityElement()
                     .accessibilityHeading(.h1)
+                    .accessibilityAddTraits(.isHeader)
             } else {
                 Text(title)
                     .font(.headline)
+                    .accessibilityElement()
                     .accessibilityAddTraits(.isHeader)
             }
 
             if showSearchbar {
                 TextField("Search", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .accessibilityElement()
+                    .accessibilityAddTraits(.isSearchField)
                     .accessibilityLabel("Search items")
+                    .accessibilityHint(Text("Type text to search for items"))
             }
 
             List(filteredItems, id: \.self) { item in
@@ -68,6 +74,10 @@ struct CustomPicker: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("\(item)\(item == selected ? ", selected" : "")")
                 .accessibilityAddTraits(item == selected ? .isSelected : .isButton)
+                .accessibilityAction(.magicTap) {
+                    selected = item
+                }
+                .accessibilityAddTraits(.updatesFrequently)
             }
         }
         .padding()

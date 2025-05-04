@@ -10,30 +10,52 @@ import SwiftUI
 struct NewsView: View {
     let news: [News] = News.sampleData
 
+    @ViewBuilder
+    private func SubImageNews(_ news: News) -> some View {
+        NavigationLink(destination: ImageNewsView(news: news as! ImageNews)) {
+            NewsCardView(news: news)
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityLabel(Text("\(news.title). Tap to read more."))
+                .accessibilityValue(Text(
+                    news.preview_text + "\n" + "from \(news.date.format())"
+                ))
+        }
+    }
+    
+    @ViewBuilder
+    private func TextNews(_ news: News) -> some View {
+        NavigationLink(destination: TextNewsView(news: news)) {
+            NewsCardView(news: news)
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityLabel("\(news.title), text news. Tap to read more.")
+                .accessibilityValue(Text(
+                    news.preview_text + "\n" + "from \(news.date.format())"
+                ))
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(news) { n in
-                    if let imageNews = n as? ImageNews {
-                        NavigationLink(destination: ImageNewsView(news: imageNews)) {
-                            NewsCardView(news: n)
-                                .accessibilityElement(children: .combine)
-                                .accessibilityLabel("\(n.title), image news. Tap to read more.")
-                        }
+                    if let _ = n as? ImageNews {
+                        SubImageNews(n)
                     } else {
-                        NavigationLink(destination: TextNewsView(news: n)) {
-                            NewsCardView(news: n)
-                                .accessibilityElement(children: .combine)
-                                .accessibilityLabel("\(n.title), text news. Tap to read more.")
-                        }
+                        TextNews(n)
                     }
                 }
             }
             .navigationBarTitle("News", displayMode: .inline)
-            .accessibilityAddTraits(.isHeader)
-            .accessibilityLabel("News List")
+            .accessibilityLabel(Text("News List"))
+            .accessibilityValue(Text("List of News \(titles)"))
             .accessibilityHint("Swipe to explore news items. Double tap to open.")
         }
+    }
+    
+    private var titles: String {
+        news.reduce("", { $0 + " " + $1.title })
     }
 }
 

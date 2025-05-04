@@ -15,42 +15,58 @@ struct EnrollmentView: View {
                 .accessibilityLabel("Enroll Now")
 
             VStack(alignment: .leading, spacing: 10) {
-                Text("Username")
-                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Username")
+                        .accessibilityHidden(true)
 
-                TextField("Enter your username", text: $username)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .accessibilityLabel("Username field")
-                    .accessibilityHint("Enter your username")
+                    TextField("Enter your username", text: $username)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .accessibilityLabel("Username field")
+                        .accessibilityHint("Enter your username")
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Username field")
+                .accessibilityHint("Enter your username")
 
-                Text("Password")
-                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Password")
+                        .accessibilityHidden(true)
 
-                SecureField("Enter your password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .accessibilityLabel("Password field")
-                    .accessibilityHint("Enter your password")
+                    SecureField("Enter your password", text: $password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Password field")
+                .accessibilityHint("Enter your password")
             }
 
-            Button(action: {
-                // Enrollment logic
-                debugPrint("Enroll here...")
-            }) {
-                Text("Submit")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-            .accessibilityLabel("Submit enrollment")
-            .accessibilityHint("Submits your enrollment information")
+            SubmitButton()
 
             Spacer()
         }
         .padding()
         .navigationTitle("Enrollment")
         .accessibilityElement(children: .contain)
+    }
+    
+    @ViewBuilder
+    private func SubmitButton() -> some View {
+        let isValidToSubmit = !(self.username.isEmpty && self.password.isEmpty)
+        
+        NavigationLink {
+            if isValidToSubmit {
+                RegistrationView()
+            }
+        } label: {
+            Text("Submit")
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(isValidToSubmit ? Color.blue : Color.gray)
+                .foregroundColor(Color(UIColor.white))
+                .cornerRadius(8)
+            .accessibilityLabel("Submit enrollment")
+            .accessibilityHint("Submits your enrollment information")
+        }
         
     }
     

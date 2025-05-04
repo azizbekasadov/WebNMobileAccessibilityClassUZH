@@ -31,10 +31,6 @@ struct MealsView: View {
             ForEach(mensas) { restaurant in
                 NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
                     RestaurantCardView(restaurant: restaurant)
-                        .accessibilityElement(children: .combine)
-                        .accessibilityLabel("\(restaurant.name). Double tap to view restaurant details.")
-                        .accessibilityAddTraits(.isButton)
-                        .accessibilityIdentifier("restaurantCard_\(restaurant.id.uuidString)")
                 }
             }
         }

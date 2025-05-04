@@ -29,7 +29,6 @@ struct RestaurantCardView: View {
             Text(restaurant.name)
                 .font(.headline)
                 .foregroundColor(.primary)
-                .accessibilityAddTraits(.isHeader)
                 .accessibilityLabel("Restaurant name: \(restaurant.name)")
 
             // Restaurant image
@@ -43,7 +42,7 @@ struct RestaurantCardView: View {
                 .accessibilityAddTraits(.isImage)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
         .shadow(radius: 4)
         .accessibilityElement(children: .combine)

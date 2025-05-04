@@ -22,7 +22,7 @@ struct CustomCardPicker: View {
                 title: title,
                 items: items,
                 showSearchbar: showSearchbar
-            )
+            ).accessibilityAddTraits(.updatesFrequently)
         ){
             if #available(iOS 15, *) {
                 DestinationView()
@@ -42,7 +42,7 @@ struct CustomCardPicker: View {
             Text(selected)
                 .fontWeight(.light)
         }
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(title))
         .accessibilityValue(Text(selected))
     }

@@ -27,19 +27,19 @@ struct TabViewFactory: TabViewFactoryProtocol {
             return  AnyView(
                 NewsView()
                     .tab(tab.tabItem)
-                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem.title)"))
             )
         case .meals:
             return AnyView(
                 MealsView()
                     .tab(tab.tabItem)
-                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem.title)"))
             )
         case .enroll:
             return AnyView(
                 EnrollmentView()
                     .tab(tab.tabItem)
-                    .accessibilityLabel(Text("Tab Item \(tab.tabItem)"))
+                    .accessibilityLabel(Text("Tab Item \(tab.tabItem.title)"))
             )
         }
     }
@@ -81,13 +81,16 @@ struct MainView: View {
         TabView {
             ForEach(Tabs.mainTabs, id:\.rawValue) { tab in
                 tabViewsFactory.make(for: tab)
-                    .accessibilityIdentifier("tab_\(tab.tabItem.imageName)")
-                    .accessibilityLabel(tab.tabItem.title ?? "tab_NNN")
                     .accessibilityHint("Switches to the \(String(describing: tab.tabItem.title)) tab")
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Main tab navigation")
+        .accessibilityLabel(Text("Main tab navigation"))
+        .accessibilityValue(Text("Tab Bar with options to select " + Tabs
+            .mainTabs
+            .compactMap({ $0.tabItem.title })
+            .reduce("", { $0 + " " + $1 }))
+        )
     }
 }
 
