@@ -64,7 +64,7 @@ struct RestaurantView: View {
                 .fixedSize()
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("\(menuTypes[0]) of \(restaurant.homeMenu.name) with ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
-                .accessibilityHint("Contains \(restaurant.homeMenu.ingredients.count) ingredients: \(restaurant.homeMenu.ingredients.joined(separator: ", "))")
+                .accessibilityHint("Tap on this card to read more about this menu")
                 
                 Spacer()
 
@@ -75,7 +75,7 @@ struct RestaurantView: View {
                         .accessibilityHidden(true)
                     
                     VStack{
-                        Text(menuTypes[0])
+                        Text(menuTypes[1])
                             .fontWeight(.bold)
                             .accessibilityAddTraits(.isButton)
 
@@ -104,7 +104,7 @@ struct RestaurantView: View {
                         restaurant.vegiMenu.name + "\n" + "Contains \(restaurant.vegiMenu.ingredients.count) ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))"
                     )
                 )
-                .accessibilityHint("Contains \(restaurant.vegiMenu.ingredients.count) ingredients: \(restaurant.vegiMenu.ingredients.joined(separator: ", "))")
+                .accessibilityHint("Tap on this card to read more about this menu")
                 
                 Spacer()
             }
