@@ -22,7 +22,8 @@ struct CustomCardPicker: View {
                 title: title,
                 items: items,
                 showSearchbar: showSearchbar
-            ).accessibilityAddTraits(.updatesFrequently)
+            )
+            .accessibilityAddTraits(.updatesFrequently)
         ){
             if #available(iOS 15, *) {
                 DestinationView()

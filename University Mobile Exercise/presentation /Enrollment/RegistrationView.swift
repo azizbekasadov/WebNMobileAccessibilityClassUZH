@@ -116,6 +116,7 @@ struct RegistrationView: View {
                 UMDatePicker(
                     dateValue: $registration.personalData.date_of_birth
                 )
+                .frame(maxHeight: 80)
             }
             
             CustomCardPicker(

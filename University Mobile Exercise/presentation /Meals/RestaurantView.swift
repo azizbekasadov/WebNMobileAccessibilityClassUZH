@@ -35,8 +35,8 @@ struct RestaurantView: View {
                 // Home Menu Card
                 ZStack{
                     RoundedRectangle(cornerRadius: 25, style: .continuous)
-                        .fill(.white)
-                        .shadow(radius:10)
+                        .fill(Color(UIColor.systemBackground))
+                        .shadow(color: Color(UIColor.systemGray).opacity(0.5),radius:10)
                         .accessibilityHidden(true)
                     
                     VStack{
@@ -70,14 +70,14 @@ struct RestaurantView: View {
 
                 ZStack {
                     RoundedRectangle(cornerRadius: 25)
-                        .fill(.white)
-                        .shadow(radius:10)
+                        .fill(Color(UIColor.systemBackground))
+                        .shadow(color: Color(UIColor.systemGray).opacity(0.5),radius:10)
                         .accessibilityHidden(true)
                     
                     VStack{
                         Text(menuTypes[0])
                             .fontWeight(.bold)
-                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityAddTraits(.isButton)
 
                         Text(restaurant.vegiMenu.name)
                             .frame(maxWidth:150, alignment: .leading)
@@ -151,6 +151,7 @@ struct RestaurantView: View {
         .accessibilityLabel(Text("Select between Restaurant and Info tabs"))
         .accessibilityHint("Switch between restaurant menu and information")
         .accessibilityValue("Selected Tab: \(self.tabs[selectedTab]) from options \(self.tabs.joined(separator: ","))")
+        .accessibilityAddTraits(.updatesFrequently)
     }
     
     @ViewBuilder
@@ -243,6 +244,7 @@ struct RestaurantView: View {
             .accessibilityLabel("Rating for \(restaurantName)")
             .accessibilityValue("\(Int(rating)) out of 5 stars")
             .accessibilityHint("Swipe up or down to adjust the rating")
+            .accessibilityAddTraits(.updatesFrequently)
 
             Text("Rating: \(Int(rating))")
                 .padding(.bottom)

@@ -33,6 +33,7 @@ struct ImageNewsView: View {
                     .scaledToFit()
                     .accessibilityLabel("Image related to \(news.title)")
                     .accessibilityHint("Visual content associated with the news article")
+                    .accessibilityAddTraits(.isImage)
 
                 if #available(iOS 15, *) {
                     FullArticleTextView()
